@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_clone_web/cubits/cubits.dart';
 import 'package:netflix_clone_web/screens/home_screen.dart';
+import 'package:netflix_clone_web/widgets/widgets.dart';
 
 class NavScreen extends StatefulWidget {
   NavScreen({Key key}) : super(key: key);
@@ -33,27 +34,29 @@ class _NavScreenState extends State<NavScreen> {
     return Scaffold(
       body: BlocProvider<AppBarCubit>(
           create: (_) => AppBarCubit(), child: _screens[_currentIndex]),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black,
-        items: _icons
-            .map((title, icon) => MapEntry(
-                title,
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      icon,
-                      size: 30.0,
-                    ),
-                    title: Text(title))))
-            .values
-            .toList(),
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.white,
-        selectedFontSize: 11.0,
-        unselectedItemColor: Colors.grey,
-        unselectedFontSize: 11.0,
-        onTap: (index) => setState(() => _currentIndex = index),
-      ),
+      bottomNavigationBar: !Responsive.isDesktop(context)
+          ? BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.black,
+              items: _icons
+                  .map((title, icon) => MapEntry(
+                      title,
+                      BottomNavigationBarItem(
+                          icon: Icon(
+                            icon,
+                            size: 30.0,
+                          ),
+                          title: Text(title))))
+                  .values
+                  .toList(),
+              currentIndex: _currentIndex,
+              selectedItemColor: Colors.white,
+              selectedFontSize: 11.0,
+              unselectedItemColor: Colors.grey,
+              unselectedFontSize: 11.0,
+              onTap: (index) => setState(() => _currentIndex = index),
+            )
+          : null,
     );
   }
 }
